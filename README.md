@@ -17,6 +17,7 @@ is provided, it "busy waits," that is, it spins in a loop checking the current t
 calling thread_yield() until enough time has gone by. Reimplement it to avoid busy waiting.
 
 
+
 2. Implement priority scheduling in Pintos. When a thread is added to the ready list that has 
 a higher priority than the currently running thread, the current thread should immediately 
 yield the processor to the new thread. Similarly, when threads are waiting for a lock, 
