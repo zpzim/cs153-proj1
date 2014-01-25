@@ -100,6 +100,10 @@ struct thread
 
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
+    
+    /* ticks since OS start when thread started waiting */
+    int64_t time_entered_wait;
+    int64_t time_to_wait; // number of ticks to wait
   };
 
 /* If false (default), use round-robin scheduler.
@@ -125,6 +129,7 @@ const char *thread_name (void);
 
 void thread_exit (void) NO_RETURN;
 void thread_yield (void);
+void thread_wait(void); // user added
 
 /* Performs some operation on thread t, given auxiliary data AUX. */
 typedef void thread_action_func (struct thread *t, void *aux);
