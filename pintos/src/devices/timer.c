@@ -177,20 +177,27 @@ timer_interrupt (struct intr_frame *args UNUSED)
   ticks++;
   // retrieve cur thread - not needed
   // loop over wait queue
-  for( int i = 0; i < ready_list.size(); i++ )
+  struct list_elem *e;
+  struct foo
   {
+    struct list_elem elem;
+  };
+
+  for (e = list_begin (&ready_list); e != list_end (&ready_list);
+       e = list_next (e))
+  {
+    struct foo *f = list_entry (e, struct foo, elem);
+    thread_unblock(f->elem); // unblock thread. error if thread is not blocked
+  }
+  //list_for_each( pos, &ready_list )
+  //{
     // if blocked
-    //entered at 100 ticks
-    // current tick is 150
-    // wait ticks is 100
-    // 150 - 100 = 50 
-    // 200 - 100 = 100 . good
-    if ( (ticks - ready_list[i]->time_entered_wait) >= ready_list[i]->time_to_wait)
-    {
+    //if ( (ticks - ready_list[i]->time_entered_wait) >= ready_list[i]->time_to_wait)
+    //{
       // unblock thread. move to ready.
       // call thread_unblock() directly
-    }
-  }
+    //}
+  //}
   // check if queue element done waiting
   // move to element(s) to readyq if valid
   
