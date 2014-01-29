@@ -108,7 +108,7 @@ struct thread
     
     /* ticks since OS start when thread started waiting */
     int64_t time_entered_wait;
-    int64_t time_to_wait; // number of ticks to wait
+    int64_t time_to_wait; // number of ticks to wait.
   };
 
 /* If false (default), use round-robin scheduler.

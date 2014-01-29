@@ -189,7 +189,7 @@ timer_interrupt (struct intr_frame *args UNUSED)
     struct foo *f = list_entry (e, struct foo, elem);
     thread_unblock(f->elem); // unblock thread. error if thread is not blocked
   }
-  //list_for_each( pos, &ready_list )
+  //list_for_each( pos, &ready_list ) // blah
   //{
     // if blocked
     //if ( (ticks - ready_list[i]->time_entered_wait) >= ready_list[i]->time_to_wait)

@@ -235,7 +235,7 @@ thread_block (void)
    This function does not preempt the running thread.  This can
    be important: if the caller had disabled interrupts itself,
    it may expect that it can atomically unblock a thread and
-   update other data. */
+   update other data.. */
 void
 thread_unblock (struct thread *t) 
 {
