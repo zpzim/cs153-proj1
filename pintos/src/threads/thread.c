@@ -22,7 +22,7 @@
 
 /* List of processes in THREAD_READY state, that is, processes
    that are ready to run but not actually running. */
-static struct list ready_list;
+//static struct list ready_list; // moved to thread.h
 
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
@@ -235,7 +235,7 @@ thread_block (void)
    This function does not preempt the running thread.  This can
    be important: if the caller had disabled interrupts itself,
    it may expect that it can atomically unblock a thread and
-   update other data. */
+   update other data.. */
 void
 thread_unblock (struct thread *t) 
 {
@@ -321,6 +321,28 @@ thread_yield (void)
   schedule ();
   intr_set_level (old_level);
 }
+
+void
+thread_wait (void) 
+{
+  struct thread *cur = thread_current ();
+  enum intr_level old_level;
+  
+  ASSERT (!intr_context ());
+
+  old_level = intr_disable ();
+  if (cur != idle_thread) 
+    list_push_back (&ready_list, &cur->elem);
+  cur->status = THREAD_BLOCKED;
+  // assign timer thread entered
+
+//  int64_t start = timer_ticks();
+//  cur->time_entered_wait = start;
+
+  schedule ();
+  intr_set_level (old_level);
+}
+
 
 /* Invoke function 'func' on all threads, passing along 'aux'.
    This function must be called with interrupts off. */

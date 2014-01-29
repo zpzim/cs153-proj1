@@ -90,10 +90,14 @@ void
 timer_sleep (int64_t ticks) 
 {
   int64_t start = timer_ticks ();
-
+  struct thread *cur = thread_current (); 
   ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < ticks) 
-    thread_yield ();
+  cur->time_entered_wait = start;
+  cur->time_to_wait = ticks;
+  //while (timer_elapsed (start) < ticks)
+
+   thread_wait();// add to wait
+   // call thread_block()
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -171,6 +175,32 @@ static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
   ticks++;
+  // retrieve cur thread - not needed
+  // loop over wait queue
+  struct list_elem *e;
+  struct foo
+  {
+    struct list_elem elem;
+  };
+
+  for (e = list_begin (&ready_list); e != list_end (&ready_list);
+       e = list_next (e))
+  {
+    struct foo *f = list_entry (e, struct foo, elem);
+    thread_unblock(f->elem); // unblock thread. error if thread is not blocked
+  }
+  //list_for_each( pos, &ready_list ) // blah
+  //{
+    // if blocked
+    //if ( (ticks - ready_list[i]->time_entered_wait) >= ready_list[i]->time_to_wait)
+    //{
+      // unblock thread. move to ready.
+      // call thread_unblock() directly
+    //}
+  //}
+  // check if queue element done waiting
+  // move to element(s) to readyq if valid
+  
   thread_tick ();
 }
 
