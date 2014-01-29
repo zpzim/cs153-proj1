@@ -330,11 +330,7 @@ void yield_thread(struct thread *t, void * aux)
 old_level = intr_disable ();
   if(t->status == THREAD_BLOCKED && --(t->time_to_wait) <= 0)
   {
-
-  if (t != idle_thread)
-    list_push_back (&ready_list, &t->elem);
-  t->status = THREAD_READY;
-  schedule ();
+ 	thread_unblock(t);
  }
  intr_set_level (old_level);
 

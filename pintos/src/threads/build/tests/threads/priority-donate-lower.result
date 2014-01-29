@@ -1,0 +1,8 @@
+FAIL
+Kernel panic in run: PANIC at ../../threads/synch.c:232 in lock_release(): assertion `lock_held_by_current_thread (lock)' failed.
+Call stack: 0xc0028492 0xc002297c 0xc002b632 0xc002112a
+Translation of call stack:
+0xc0028492: debug_panic (.../../lib/kernel/debug.c:38)
+0xc002297c: lock_release (...../../threads/synch.c:234)
+0xc002b632: acquire_thread_func (...riority-donate-lower.c:50)
+0xc002112a: kernel_thread (..../../threads/thread.c:467)

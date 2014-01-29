@@ -95,8 +95,9 @@ timer_sleep (int64_t ticks)
  // cur->time_entered_wait = start;
   cur->time_to_wait = ticks;
   //while (timer_elapsed (start) < ticks)
-
-   thread_wait();// add to wait
+   enum intr_level old  = intr_disable();
+   thread_block();// add to wait
+   intr_set_level(old);
    // call thread_block()
 }
 
