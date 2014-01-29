@@ -26,7 +26,7 @@
 
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
-static struct list all_list;
+//static struct list all_list;
 
 /* Idle thread. */
 static struct thread *idle_thread;
@@ -322,8 +322,24 @@ thread_yield (void)
   intr_set_level (old_level);
 }
 
-void
-thread_wait (void) 
+void yield_thread(struct thread *t, void * aux)
+{
+  enum intr_level old_level;
+
+ // ASSERT (!intr_context ());
+old_level = intr_disable ();
+  if(t->status == THREAD_BLOCKED && --(t->time_to_wait) <= 0)
+  {
+
+  if (t != idle_thread)
+    list_push_back (&ready_list, &t->elem);
+  t->status = THREAD_READY;
+  schedule ();
+ }
+ intr_set_level (old_level);
+
+}
+void thread_wait (void) 
 {
   struct thread *cur = thread_current ();
   enum intr_level old_level;

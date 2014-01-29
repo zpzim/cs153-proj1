@@ -92,7 +92,7 @@ timer_sleep (int64_t ticks)
   int64_t start = timer_ticks ();
   struct thread *cur = thread_current (); 
   ASSERT (intr_get_level () == INTR_ON);
-  cur->time_entered_wait = start;
+ // cur->time_entered_wait = start;
   cur->time_to_wait = ticks;
   //while (timer_elapsed (start) < ticks)
 
@@ -177,18 +177,33 @@ timer_interrupt (struct intr_frame *args UNUSED)
   ticks++;
   // retrieve cur thread - not needed
   // loop over wait queue
-  struct list_elem *e;
-  struct foo
+ // if(!list_empty(&ready_list))
+ // {
+ /* ASSERT (intr_get_level() == INTR_OFF);
+  printf("Test0");
+     struct list_elem *e = list_begin(&all_list);
+  printf("Test1"); 
+  for (; e != list_end (&all_list);
+           e = list_next (e))
   {
-    struct list_elem elem;
-  };
+  	printf("Test2");
 
-  for (e = list_begin (&ready_list); e != list_end (&ready_list);
-       e = list_next (e))
-  {
-    struct foo *f = list_entry (e, struct foo, elem);
-    thread_unblock(f->elem); // unblock thread. error if thread is not blocked
-  }
+//	printf("%X\n", list_begin(&all_list));
+//	printf("%X\n", e);
+//	printf("%X\n", list_end(&all_list)); 
+	if(e == NULL)
+	{
+	//	printf("AT Tail");
+		break;
+	}
+	struct thread *t = list_entry (e, struct thread, elem);
+	printf("%d\n", t->time_to_wait);
+	if(t->status == THREAD_BLOCKED && --(t->time_to_wait) <= 0)
+		 yield_thread(t); // unblock thread. error if thread is not blocked
+      }
+ // }
+ // else
+	//printf("Ready List Empty\n");
   //list_for_each( pos, &ready_list ) // blah
   //{
     // if blocked
@@ -200,8 +215,9 @@ timer_interrupt (struct intr_frame *args UNUSED)
   //}
   // check if queue element done waiting
   // move to element(s) to readyq if valid
-  
-  thread_tick ();
+ */
+ thread_foreach(&yield_thread, NULL);
+ thread_tick ();
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer
@@ -212,12 +228,16 @@ too_many_loops (unsigned loops)
   /* Wait for a timer tick. */
   int64_t start = ticks;
   while (ticks == start)
-    barrier ();
-
+  {
+       // printf("%d",ticks);
+	barrier ();
+//        debug_backtrace();
+  }
   /* Run LOOPS loops. */
+ // printf("Test1");
   start = ticks;
   busy_wait (loops);
-
+ // printf("Test2");
   /* If the tick count changed, we iterated too long. */
   barrier ();
   return start != ticks;
