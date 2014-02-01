@@ -206,17 +206,21 @@ thread_create (const char *name, int priority,
   sf->eip = switch_entry;
   sf->ebp = 0;
 
-  intr_set_level (old_level);
+  
 
   /* Add to run queue. */
   //sema_init(&WAIT_Sema, 1);
   //sema_down(&WAIT_Sema);
-  thread_unblock (t);
-  //if (t -> priority > thread_current() -> priority) 
-  //{
-	
-	//thread_yield();
-  //} 
+  if (t -> priority > thread_current() -> priority) 
+  {
+        struct thread * prev = switch_threads(thread_current(), t);
+        thread_schedule_tail(prev);
+  }
+  else
+  {
+    thread_unblock(t);
+  }
+  intr_set_level (old_level);
   //sema_up(&WAIT_Sema);
   return tid;
 }
@@ -328,10 +332,10 @@ thread_yield (void)
   {
 	  list_insert_ordered(&ready_list, &cur->elem, &cmp_priority, NULL);
  	 cur->status = THREAD_READY;
-  		schedule ();
+  		
 
 }
-
+schedule ();
   intr_set_level (old_level);
 }
 
@@ -369,16 +373,19 @@ thread_foreach (thread_action_func *func, void *aux)
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) 
-{
+{ 
+  //sema_init(&Priority_Sema, 1);
+  //sema_down(&Priority_Sema);
   enum intr_level old_level = intr_disable();
+  
   struct thread * cur = thread_current();
-  cur->priority = new_priority;
-  thread_block();
-  
-   
+  struct thread * next = next_thread_to_run();
+  if ( (cur->priority = new_priority) < next -> priority )
+          thread_schedule_tail(switch_threads(cur, next));
+	//schedule();  
+  //thread_yield();
   intr_set_level(old_level);
-	thread_yield();
-  
+  //sema_up(&Priority_Sema);
 }
 
 /* Returns the current thread's priority. */
