@@ -372,11 +372,21 @@ thread_set_priority (int new_priority)
 {
   enum intr_level old_level = intr_disable();
   struct thread * cur = thread_current();
+  //sema_init(&Priority_Sema, 1);
+  //sema_down(&Priority_Sema);
   cur->priority = new_priority;
-  thread_block();
+  //sema_up(&Priority_Sema);
+   thread_block();
+  //else
+	//cur -> status = THREAD_BLOCKED;
+  
   
    
   intr_set_level(old_level);
+  //struct thread * top_t = list_entry(list_max(&ready_list, &cmp_priority, NULL),
+					//struct thread, elem);
+  //sema_up(&Priority_Sema);
+  //if(thread_current()-> priority < top_t -> priority)
 	thread_yield();
   
 }
