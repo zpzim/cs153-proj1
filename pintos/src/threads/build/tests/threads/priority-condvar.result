@@ -1,69 +1,12 @@
 FAIL
-Test output failed to match any acceptable form.
-
-Acceptable output:
-  (priority-condvar) begin
-  (priority-condvar) Thread priority 23 starting.
-  (priority-condvar) Thread priority 22 starting.
-  (priority-condvar) Thread priority 21 starting.
-  (priority-condvar) Thread priority 30 starting.
-  (priority-condvar) Thread priority 29 starting.
-  (priority-condvar) Thread priority 28 starting.
-  (priority-condvar) Thread priority 27 starting.
-  (priority-condvar) Thread priority 26 starting.
-  (priority-condvar) Thread priority 25 starting.
-  (priority-condvar) Thread priority 24 starting.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 30 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 29 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 28 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 27 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 26 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 25 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 24 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 23 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 22 woke up.
-  (priority-condvar) Signaling...
-  (priority-condvar) Thread priority 21 woke up.
-  (priority-condvar) end
-Differences in `diff -u' format:
-  (priority-condvar) begin
-- (priority-condvar) Thread priority 23 starting.
-- (priority-condvar) Thread priority 22 starting.
-- (priority-condvar) Thread priority 21 starting.
-- (priority-condvar) Thread priority 30 starting.
-- (priority-condvar) Thread priority 29 starting.
-- (priority-condvar) Thread priority 28 starting.
-- (priority-condvar) Thread priority 27 starting.
-- (priority-condvar) Thread priority 26 starting.
-- (priority-condvar) Thread priority 25 starting.
-- (priority-condvar) Thread priority 24 starting.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 30 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 29 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 28 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 27 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 26 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 25 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 24 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 23 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 22 woke up.
-  (priority-condvar) Signaling...
-- (priority-condvar) Thread priority 21 woke up.
-  (priority-condvar) end
+Kernel panic in run: PANIC at ../../threads/thread.c:266 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
+Call stack: 0xc0028462 0xc0020b41 0xc0022734 0xc0022846 0xc002bcfe 0xc002a3d6 0xc00201d5 0xc00207a0
+Translation of call stack:
+0xc0028462: debug_panic (.../../lib/kernel/debug.c:38)
+0xc0020b41: thread_unblock (..../../threads/thread.c:267)
+0xc0022734: sema_up (...../../threads/synch.c:119)
+0xc0022846: cond_signal (...../../threads/synch.c:322)
+0xc002bcfe: test_priority_condvar (...ads/priority-condvar.c:41)
+0xc002a3d6: run_test (.../tests/threads/tests.c:48)
+0xc00201d5: run_task (.../../../threads/init.c:292)
+0xc00207a0: run_actions (.../../../threads/init.c:341)

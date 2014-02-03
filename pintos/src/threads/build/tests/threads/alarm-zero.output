@@ -1,4 +1,4 @@
-qemu -hda /tmp/BFSs2A45FY.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/AwVySA8QlF.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading........
 Kernel command line: -q run alarm-zero
@@ -12,8 +12,8 @@ Executing 'alarm-zero':
 (alarm-zero) PASS
 (alarm-zero) end
 Execution of 'alarm-zero' complete.
-Timer: 28 ticks
-Thread: 6 idle ticks, 22 kernel ticks, 0 user ticks
+Timer: 23 ticks
+Thread: 1 idle ticks, 22 kernel ticks, 0 user ticks
 Console: 384 characters output
 Keyboard: 0 keys pressed
 Powering off...

@@ -1,4 +1,4 @@
-qemu -hda /tmp/AASM3OMaIS.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Nk0EFnT2wL.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading........
 Kernel command line: -q run priority-condvar
@@ -9,20 +9,29 @@ Calibrating timer...  209,510,400 loops/s.
 Boot complete.
 Executing 'priority-condvar':
 (priority-condvar) begin
+(priority-condvar) Thread priority 23 starting.
+(priority-condvar) Thread priority 22 starting.
+(priority-condvar) Thread priority 21 starting.
+(priority-condvar) Thread priority 30 starting.
+(priority-condvar) Thread priority 29 starting.
+(priority-condvar) Thread priority 28 starting.
+(priority-condvar) Thread priority 27 starting.
+(priority-condvar) Thread priority 26 starting.
+(priority-condvar) Thread priority 25 starting.
+(priority-condvar) Thread priority 24 starting.
 (priority-condvar) Signaling...
 (priority-condvar) Signaling...
 (priority-condvar) Signaling...
 (priority-condvar) Signaling...
 (priority-condvar) Signaling...
 (priority-condvar) Signaling...
-(priority-condvar) Signaling...
-(priority-condvar) Signaling...
-(priority-condvar) Signaling...
-(priority-condvar) Signaling...
-(priority-condvar) end
-Execution of 'priority-condvar' complete.
-Timer: 27 ticks
-Thread: 5 idle ticks, 22 kernel ticks, 0 user ticks
-Console: 717 characters output
+Kernel PANIC at ../../threads/thread.c:266 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
+Call stack: 0xc0028462 0xc0020b41 0xc0022734 0xc0022846 0xc002bcfe 0xc002a3d6 0xc00201d5 0xc00207a0.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 23 ticks
+Thread: 1 idle ticks, 22 kernel ticks, 0 user ticks
+Console: 1371 characters output
 Keyboard: 0 keys pressed
 Powering off...

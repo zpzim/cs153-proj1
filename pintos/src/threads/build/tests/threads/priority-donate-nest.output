@@ -1,4 +1,4 @@
-qemu -hda /tmp/i0kAWujNnb.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/VVcuCUcmev.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading........
 Kernel command line: -q run priority-donate-nest
@@ -11,14 +11,13 @@ Executing 'priority-donate-nest':
 (priority-donate-nest) begin
 (priority-donate-nest) Low thread should have priority 32.  Actual priority: 31.
 (priority-donate-nest) Low thread should have priority 33.  Actual priority: 31.
-(priority-donate-nest) Medium thread should have priority 33.  Actual priority: 32.
-(priority-donate-nest) Medium thread got the lock.
-(priority-donate-nest) Medium thread should just have finished.
-(priority-donate-nest) Low thread should have priority 31.  Actual priority: 31.
-(priority-donate-nest) end
-Execution of 'priority-donate-nest' complete.
-Timer: 27 ticks
-Thread: 6 idle ticks, 21 kernel ticks, 0 user ticks
-Console: 859 characters output
+Kernel PANIC at ../../threads/thread.c:266 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
+Call stack: 0xc0028462 0xc0020b41 0xc0022734 0xc002295d 0xc002b3e7 0xc002a3d6 0xc00201d5 0xc00207a0.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 22 ticks
+Thread: 0 idle ticks, 22 kernel ticks, 0 user ticks
+Console: 873 characters output
 Keyboard: 0 keys pressed
 Powering off...
