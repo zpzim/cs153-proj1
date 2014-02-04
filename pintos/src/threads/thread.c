@@ -393,13 +393,20 @@ thread_set_priority (int new_priority)
   enum intr_level old_level = intr_disable();
   
   struct thread * cur = thread_current();
-  struct thread * next = list_entry(list_begin(&ready_list), struct thread, elem); //next_thread_to_run();
-  if ( (cur->priority = new_priority) < next -> priority )
-	thread_yield();        
+  //struct thread * next = list_entry(list_begin(&ready_list), struct thread, elem); //next_thread_to_run();
+  cur->priority = new_priority;
+  //cur->status = THREAD_READY;
+  
+  //list_remove(cur);
+  //list_insert_ordered(&
+  
+  thread_yield();       
+
+  intr_set_level(old_level); 
  //thread_schedule_tail(switch_threads(cur, next));
 	//schedule();  
   //thread_yield();
-  intr_set_level(old_level);
+  
   //sema_up(&Priority_Sema);
 }
 

@@ -1,9 +1,12 @@
 FAIL
-Kernel panic in run: PANIC at ../../threads/thread.c:266 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
-Call stack: 0xc0028462 0xc0020b41 0xc0022734 0xc002ab57 0xc00210ef
+Kernel panic in run: PANIC at ../../lib/kernel/list.c:84 in list_next(): assertion `is_head (elem) || is_interior (elem)' failed.
+Call stack: 0xc0028462 0xc0028870 0xc0028ba8 0xc0022b00 0xc002aae2 0xc002a3d6 0xc00201d5 0xc00207a0
 Translation of call stack:
 0xc0028462: debug_panic (.../../lib/kernel/debug.c:38)
-0xc0020b41: thread_unblock (..../../threads/thread.c:267)
-0xc0022734: sema_up (...../../threads/synch.c:119)
-0xc002ab57: alarm_priority_thread (...reads/alarm-priority.c:58)
-0xc00210ef: kernel_thread (..../../threads/thread.c:490)
+0xc0028870: is_interior (..../../lib/kernel/list.c:49)
+0xc0028ba8: list_insert_ordered (.../../lib/kernel/list.c:455)
+0xc0022b00: sema_down (.../../../threads/synch.c:72)
+0xc002aae2: test_alarm_priority (...reads/alarm-priority.c:37)
+0xc002a3d6: run_test (.../tests/threads/tests.c:48)
+0xc00201d5: run_task (.../../../threads/init.c:292)
+0xc00207a0: run_actions (.../../../threads/init.c:341)

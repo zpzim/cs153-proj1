@@ -1,4 +1,4 @@
-qemu -hda /tmp/hvJPGrKI8w.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/G3lVhDhNiD.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading........
 Kernel command line: -q run priority-donate-one
@@ -11,12 +11,14 @@ Executing 'priority-donate-one':
 (priority-donate-one) begin
 (priority-donate-one) This thread should have priority 32.  Actual priority: 31.
 (priority-donate-one) This thread should have priority 33.  Actual priority: 31.
-(priority-donate-one) acquire2, acquire1 must already have finished, in that order.
-(priority-donate-one) This should be the last line before finishing this test.
-(priority-donate-one) end
-Execution of 'priority-donate-one' complete.
+(priority-donate-one) acquire2: got the lock
+Kernel PANIC at ../../threads/thread.c:266 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
+Call stack: 0xc0028462 0xc0020b41 0xc0022704 0xc0022948 0xc002ac8e 0xc00210c7.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
 Timer: 23 ticks
 Thread: 0 idle ticks, 23 kernel ticks, 0 user ticks
-Console: 736 characters output
+Console: 892 characters output
 Keyboard: 0 keys pressed
 Powering off...

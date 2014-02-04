@@ -393,13 +393,18 @@ thread_set_priority (int new_priority)
   enum intr_level old_level = intr_disable();
   
   struct thread * cur = thread_current();
-  struct thread * next = list_entry(list_begin(&ready_list), struct thread, elem); //next_thread_to_run();
-  if ( (cur->priority = new_priority) < next -> priority )
-	thread_yield();        
+  //struct thread * next = list_entry(list_begin(&ready_list), struct thread, elem); //next_thread_to_run();
+  cur->priority = new_priority;
+  //cur->status = THREAD_READY;
+  
+  //list_remove(cur);
+  //list_insert_ordered(&
+  intr_set_level(old_level);
+  thread_yield();        
  //thread_schedule_tail(switch_threads(cur, next));
 	//schedule();  
   //thread_yield();
-  intr_set_level(old_level);
+  
   //sema_up(&Priority_Sema);
 }
 
@@ -653,15 +658,4 @@ int cmp_priority(struct list_elem *a, struct list_elem *b, void *aux)
 	//printf("%d < %d ? %d\n",pA,pB,pA<pB);
 	//sema_up(&Priority_Sema);
         return pA>pB;
-}
-
-int cmp_priority_geq(struct list_elem *a, struct list_elem *b, void *aux)
-{
-	//sema_init(&Priority_Sema, 1);
-  	//sema_down(&Priority_Sema);
-	int pA = list_entry(a, struct thread, elem) -> priority;
-	int pB = list_entry(b, struct thread, elem) -> priority;
-	//printf("%d < %d ? %d\n",pA,pB,pA<pB);
-	//sema_up(&Priority_Sema);
-        return pA>=pB;
 }

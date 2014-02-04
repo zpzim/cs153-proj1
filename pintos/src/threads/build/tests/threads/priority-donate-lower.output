@@ -1,4 +1,4 @@
-qemu -hda /tmp/HYmE3oONh5.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/JLIYW1JhLb.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading........
 Kernel command line: -q run priority-donate-lower
@@ -13,7 +13,7 @@ Executing 'priority-donate-lower':
 (priority-donate-lower) Lowering base priority...
 (priority-donate-lower) Main thread should have priority 41.  Actual priority: 21.
 Kernel PANIC at ../../threads/thread.c:266 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
-Call stack: 0xc0028462 0xc0020b41 0xc0022734 0xc002295d 0xc002b713 0xc002a3d6 0xc00201d5 0xc00207a0.
+Call stack: 0xc0028462 0xc0020b41 0xc0022704 0xc0022948 0xc002b713 0xc002a3d6 0xc00201d5 0xc00207a0.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
