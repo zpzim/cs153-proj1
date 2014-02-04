@@ -1,0 +1,24 @@
+qemu -hda /tmp/velZRy6dRt.dsk -m 4 -net none -nographic -monitor null
+PiLo hda1
+Loading........
+Kernel command line: -q run priority-donate-multiple2
+Pintos booting with 4,096 kB RAM...
+383 pages available in kernel pool.
+383 pages available in user pool.
+Calibrating timer...  209,510,400 loops/s.
+Boot complete.
+Executing 'priority-donate-multiple2':
+(priority-donate-multiple2) begin
+(priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 31.
+(priority-donate-multiple2) Thread c finished.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
+Kernel PANIC at ../../threads/thread.c:250 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
+Call stack: 0xc0028442 0xc0020b41 0xc0022714 0xc002293d 0xc002b18f 0xc002a3b6 0xc00201d5 0xc00207a0.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 22 ticks
+Thread: 0 idle ticks, 22 kernel ticks, 0 user ticks
+Console: 947 characters output
+Keyboard: 0 keys pressed
+Powering off...

@@ -1,0 +1,12 @@
+FAIL
+Kernel panic in run: PANIC at ../../threads/thread.c:250 in thread_unblock(): assertion `t->status == THREAD_BLOCKED' failed.
+Call stack: 0xc0028442 0xc0020b41 0xc0022714 0xc002293d 0xc002b18f 0xc002a3b6 0xc00201d5 0xc00207a0
+Translation of call stack:
+0xc0028442: debug_panic (.../../lib/kernel/debug.c:38)
+0xc0020b41: thread_unblock (..../../threads/thread.c:252)
+0xc0022714: sema_up (...../../threads/synch.c:119)
+0xc002293d: lock_release (...../../threads/synch.c:236)
+0xc002b18f: test_priority_donate_multiple2 (...ity-donate-multiple2.c:55)
+0xc002a3b6: run_test (.../tests/threads/tests.c:48)
+0xc00201d5: run_task (.../../../threads/init.c:292)
+0xc00207a0: run_actions (.../../../threads/init.c:341)
