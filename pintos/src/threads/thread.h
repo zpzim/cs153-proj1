@@ -142,6 +142,7 @@ void thread_wait(void); // user added
 /* Performs some operation on thread t, given auxiliary data AUX. */
 typedef void thread_action_func (struct thread *t, void *aux);
 void thread_foreach (thread_action_func *, void *);
+void thread_foreach_ready (thread_action_func *, void *);
 
 int thread_get_priority (void);
 void thread_set_priority (int);
@@ -152,4 +153,8 @@ int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
 int cmp_priority(struct list_elem *a, struct list_elem *b, void *aux);
+void print_list(struct thread *t, void *aux);
+void debug_prints();
+
+
 #endif /* threads/thread.h */

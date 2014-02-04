@@ -207,9 +207,9 @@ thread_create (const char *name, int priority,
   sf->ebp = 0;
 
   
-intr_set_level(old_level);
+  intr_set_level(old_level);
 
-
+  
   thread_unblock(t);
 
   
@@ -266,8 +266,9 @@ thread_unblock (struct thread *t)
   ASSERT (t->status == THREAD_BLOCKED);
   list_insert_ordered(&ready_list, &t->elem, &cmp_priority, NULL);
   t->status = THREAD_READY;
+
   intr_set_level (old_level);
-  //sema_up(&WAIT_Sema);
+
 }
 
 /* Returns the name of the running thread. */
@@ -338,6 +339,7 @@ thread_yield (void)
 	  //list_push_back(&ready_list, &cur->elem); 	  
 	list_insert_ordered(&ready_list, &cur->elem, &cmp_priority, NULL);
   }
+  //debug_prints(); // temp
   cur->status = THREAD_READY;
   schedule ();
   intr_set_level (old_level);
@@ -352,6 +354,8 @@ void yield_thread(struct thread *t, void * aux)
   old_level = intr_disable ();
   if(t->status == THREAD_BLOCKED && --(t->time_to_wait) <= 0)
   {
+	printf("wait time: %d\n",t->time_to_wait);
+        t->time_to_wait = 0;
 	thread_unblock(t);
 	//thread_yield();
   }
@@ -400,11 +404,11 @@ thread_set_priority (int new_priority)
   //list_remove(cur);
   //list_insert_ordered(&
   
-  thread_yield();       
+  intr_set_level(old_level);
+  thread_yield();
 
-  intr_set_level(old_level); 
- //thread_schedule_tail(switch_threads(cur, next));
-	//schedule();  
+  //thread_schedule_tail(switch_threads(cur, next));
+  //schedule();  
   //thread_yield();
   
   //sema_up(&Priority_Sema);
@@ -533,7 +537,8 @@ init_thread (struct thread *t, const char *name, int priority)
   t->stack = (uint8_t *) t + PGSIZE;
   t->priority = priority;
   t->magic = THREAD_MAGIC;
-  list_push_back (&all_list, &t->allelem);
+  //list_push_back (&all_list, &t->allelem);
+  list_insert_ordered(&all_list, &t->allelem, &cmp_priority, NULL);
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and
@@ -660,4 +665,44 @@ int cmp_priority(struct list_elem *a, struct list_elem *b, void *aux)
 	//printf("%d < %d ? %d\n",pA,pB,pA<pB);
 	//sema_up(&Priority_Sema);
         return pA>pB;
+}
+
+void print_list(struct thread *t, void *aux)
+{
+  if(t != NULL){
+  
+  printf("tid: %d\n", t->tid);
+  printf("priority: %d\n", t->priority);
+  printf("status: %d\n", t->status);
+  printf("name: %s\n", t->name);
+  printf("address: %X\n\n", t);
+
+  }
+}
+
+void thread_foreach_ready (thread_action_func *func, void *aux)
+{
+  struct list_elem *e;
+
+  ASSERT (intr_get_level () == INTR_OFF);
+
+  for (e = list_begin (&ready_list); e != list_end (&ready_list);
+       e = list_next (e))
+    {
+      struct thread *t = list_entry (e, struct thread, elem);
+      func (t, aux);
+    }
+}
+
+void debug_prints()
+{
+  printf("\nAll --\n");
+  thread_foreach(&print_list,NULL);
+  printf("all size: %d\n",list_size(&all_list));
+
+  printf("\nReady --\n");
+  thread_foreach_ready(&print_list,NULL);
+  printf("ready size: %d\n",list_size(&ready_list));
+
+  printf("\n--\n");
 }
